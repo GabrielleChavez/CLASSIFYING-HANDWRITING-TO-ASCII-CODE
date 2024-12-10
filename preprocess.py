@@ -144,8 +144,46 @@ def get_vocabulary(lines_folder: str) -> set:
 
     return vocabulary
 
+def get_max_height_width(lines_folder: str) -> tuple:
+        max_height = 0
+        max_width = 0
+        for outer_folder in os.listdir(lines_folder):
+            outer_folder_path = os.path.join(lines_folder, outer_folder)
+            for inner_folder in os.listdir(outer_folder_path):
+                inner_folder_path = os.path.join(outer_folder_path, inner_folder)
+                image_path = os.path.join(inner_folder_path, f"{inner_folder}.png")
+                image = Image.open(image_path)  
+                image_size = image.size
+                height = image_size[1]
+                width = image_size[0]
+
+                if height > max_height:
+                    max_height = height
+                if width > max_width:
+                    max_width = width
+        
+        return max_width, max_height
+
+def pad_to_max(img_path: str, width: int, height: int):
+    img = Image.open(img_path)
+    new_img = Image.new('RGB', (width, height), color=(255, 255, 255))
+    new_img.paste(img, (0, 0))
+    return new_img
+
+def pad_all_to_max(lines_path: str, width: int, height: int) -> None:
+    for outer_folder in os.listdir(lines_path):
+        outer_folder_path = os.path.join(lines_path, outer_folder)
+        for inner_folder in os.listdir(outer_folder_path):
+            inner_folder_path = os.path.join(outer_folder_path, inner_folder)
+            image_path = os.path.join(inner_folder_path, f"{inner_folder}.png")
+            new_img = pad_to_max(image_path, width, height)
+            new_img.save(image_path)
+
 if __name__ == '__main__':
 
+    width, height = get_max_height_width("lines_processed")
+    pad_all_to_max("lines_processed_padded", width, height)
+    
     # How I used these to get the processed IAM lines folder:
     # stitch_all_IAM_images("lines", "lines_processed")    
     # map_transcriptions("lines_processed", "xml_files")
