@@ -31,3 +31,5 @@ def get_data(data_dir: str, csv_dir: str) -> tuple:
 
     X = np.array(X)
     y = np.array(y)
+
+    return X, y
