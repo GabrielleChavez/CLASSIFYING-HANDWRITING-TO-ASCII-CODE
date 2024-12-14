@@ -9,7 +9,7 @@ import os
 from torch.utils.data import Dataset
 import torch.nn.functional as F
 
-# Define the custom Dataset class
+# Define the custom dataset class
 class CustomImageDataset(Dataset):
     def __init__(self, csv_dir, data_dir,transform=None):
       data_csv = pd.read_csv(csv_dir)
