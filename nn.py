@@ -8,6 +8,8 @@ from PIL import Image
 import os
 from torch.utils.data import Dataset
 import torch.nn.functional as F
+import random
+import numpy as np
 
 # Define the custom dataset class
 class CustomImageDataset(Dataset):
@@ -155,6 +157,54 @@ class CNN(nn.Module):
         x = F.relu(self.fc1(x))  # First FC layer
         x = self.fc2(x)          # Output layer
         return x
+    
+def set_seed(seed = 42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
+
+
+def train_model(num_epochs, data_loader, val_loader, device, model, criterion, optimizer, scheduler, patience, counter = 0):
+    best_val_loss = float('inf')
+    for epoch in range(num_epochs):
+        # Training step
+        model.train()
+        running_loss = 0.0
+        for images, labels in data_loader:
+            images, labels = images.to(device), labels.to(device)
+            outputs = model(images)
+            loss = criterion(outputs, labels)
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
+
+        # Validation step
+        val_loss, val_accuracy = validate(model, val_loader, criterion, device)
+
+        print(f"Epoch [{epoch+1}/{num_epochs}], Train Loss: {running_loss/len(data_loader):.4f}, "
+            f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.2f}%")
+
+        # Early stopping logic
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            counter = 0
+            print("Validation loss improved! Saving model...")
+        else:
+            counter += 1
+            print(f"Validation loss did not improve. Patience: {counter}/{patience}")
+            if counter >= patience:
+                print("Early stopping triggered!")
+                break
+        scheduler.step(val_loss)
+
+
 
 
 
