@@ -28,12 +28,12 @@ def get_data(data_dir: str, csv_dir: str) -> tuple:
 
             X.append(img_array)
 
-            mapping -= 33
+            new_mapping = mapping - 33
 
-            if mapping == 966:
-                mapping = 93
+            if new_mapping == 966:
+                new_mapping = 93
 
-            y.append(mapping)
+            y.append(new_mapping)
 
     X = np.array(X)
     y = np.array(y)
