@@ -12,16 +12,7 @@ def evaluate_model(model_name, y_true, y_pred, get_ROC_plot=False):
     cm = confusion_matrix(y_true, y_pred)
     prec = precision_score(y_true, y_pred, labels = range(0,94), average = 'weighted')
     recall = recall_score(y_true, y_pred, labels = range(0,94), average = 'weighted')
-    print(f"Model: {model_name}")
-    print(f"Accuracy: {acc:.4f}")
-    print(f"Precision: {prec:.4f}")
-    print(f"Recall: {recall:.4f}")
-    print(f"F1 Score: {f1:.4f}")
-    print("Confusion Matrix:")
-    print(cm)
-    print("\n")
-
-    return f1, acc, cm
+    return f1, acc, cm, prec, recall
 
 def plotROCcurve(fpr, tpr, auc):
     plt.plot(fpr, tpr, label=f'AUC = {auc:.2f}')
