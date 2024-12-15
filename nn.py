@@ -21,9 +21,6 @@ class CustomImageDataset(Dataset):
       for _, row in data_csv.iterrows():
          mapping = row.iloc[0]
          folder_dir = os.path.join(data_dir, str(mapping))
-         mapping -= 33
-         if mapping == 966:
-             mapping = 93
          for img_file in os.listdir(folder_dir):
                img_path = os.path.join(folder_dir, img_file)
                self.images_list.append((img_path,mapping))
