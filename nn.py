@@ -156,7 +156,6 @@ class CNN(nn.Module):
         # Fully connected layers
         x = F.relu(self.fc1(x))  # First FC layer
         x = self.fc2(x)          # Output layer
-        print(torch.sum(x, dim=1))
         return x
     
 class CNNFeatureExtractor(nn.Module):

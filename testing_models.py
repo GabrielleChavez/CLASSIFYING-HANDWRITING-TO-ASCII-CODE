@@ -3,26 +3,25 @@ import pandas as pd
 import torch
 import matplotlib as plt
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, roc_curve, roc_auc_score
+from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, roc_auc_score, precision_score, recall_score
 
 
 def evaluate_model(model_name, y_true, y_pred, get_ROC_plot=False):
-    f1 = f1_score(y_true, y_pred)
+    f1 = f1_score(y_true, y_pred, labels = range(0,94), average='weighted')
     acc = accuracy_score(y_true, y_pred)
     cm = confusion_matrix(y_true, y_pred)
-    fpr, tpr, thresholds = roc_curve(y_true, y_pred)
-    auc = roc_auc_score(y_true, y_pred)
+    prec = precision_score(y_true, y_pred, labels = range(0,94), average = 'weighted')
+    recall = recall_score(y_true, y_pred, labels = range(0,94), average = 'weighted')
     print(f"Model: {model_name}")
     print(f"Accuracy: {acc:.4f}")
+    print(f"Precision: {prec:.4f}")
+    print(f"Recall: {recall:.4f}")
     print(f"F1 Score: {f1:.4f}")
-    print(f"AUC Score: {auc:.4f}")
     print("Confusion Matrix:")
     print(cm)
     print("\n")
-    if get_ROC_plot:
-        plotROCcurve(fpr, tpr, auc)
 
-    return f1, acc, cm, auc
+    return f1, acc, cm
 
 def plotROCcurve(fpr, tpr, auc):
     plt.plot(fpr, tpr, label=f'AUC = {auc:.2f}')
@@ -68,14 +67,6 @@ def test_model(model, data_loader, device, criterion):
     avg_loss = test_loss / len(data_loader)
     accuracy = 100 * correct / total
 
-    # Calculate F1 score and confusion matrix
-    f1 = f1_score(all_labels, all_preds, average='weighted')
-    cm = confusion_matrix(all_labels, all_preds)
 
-    print(f"Test Loss: {avg_loss:.4f}, Test Accuracy: {accuracy:.2f}%")
-    print(f"F1 Score: {f1:.4f}")
-    print("Confusion Matrix:")
-    print(cm)
-
-    # evaluate_model(model, all_labels, all_preds, get_ROC_plot=True)
+    f1, acc, cm = evaluate_model(str(type(model)), all_labels, all_preds, get_ROC_plot=True)
     return avg_loss, accuracy, f1, cm
