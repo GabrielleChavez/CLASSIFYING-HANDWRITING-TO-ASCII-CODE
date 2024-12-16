@@ -60,3 +60,4 @@ def test_model(model, data_loader, device, criterion):
 
     f1, acc, cm = evaluate_model(str(type(model)), all_labels, all_preds, get_ROC_plot=True)
     return avg_loss, accuracy, f1, cm
+
