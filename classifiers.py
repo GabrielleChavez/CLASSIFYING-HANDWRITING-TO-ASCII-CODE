@@ -70,18 +70,17 @@ def train_svm(X_train, y_train, kernel='poly'):
    svm_model.fit(X_train, y_train)
    return svm_model
 
-def train_knn(X_train, y_train, n_neighbors=94, weight="distance"):
+def train_knn(X_train, y_train, n_neighbors=94):
    """
    Create and Train knn model
 
    Parameters:
       X_train (Numpy Array): training data
       y_train (Numpy Array): training labels
-      n_neighbors (int): number of classes
-      weight (string): different weight labels
+      n_neighbors (int): number of datapoints
    Returns:
       knn: knn model
    """
-   knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights=weight)
+   knn = KNeighborsClassifier(n_neighbors=n_neighbors, weights="distance")
    knn.fit(X_train, y_train)
    return knn
