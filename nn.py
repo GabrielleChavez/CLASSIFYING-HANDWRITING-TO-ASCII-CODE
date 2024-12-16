@@ -36,6 +36,7 @@ class AlphaNumDataset(Dataset):
          for img_file in os.listdir(folder_dir):
                img_path = os.path.join(folder_dir, img_file)
                self.images_list.append((img_path,mapping))
+               
 
     def __len__(self):
         """
@@ -67,11 +68,19 @@ class AlphaNumDataset(Dataset):
                 padded_img.paste(image, (2, 2))
                 image = padded_img
 
+        if label > 92:
+            new_mapping = label - 34
+        else: 
+            new_mapping = label - 33
+
+        if new_mapping == 965:
+            new_mapping = 92
+    
         transform = transforms.ToTensor() 
         tensor = transform(image)
         if self.transform:
             tensor = self.transform(tensor)
-        return tensor, label
+        return tensor, new_mapping
 
 
 class FeedForwardNN(nn.Module):
