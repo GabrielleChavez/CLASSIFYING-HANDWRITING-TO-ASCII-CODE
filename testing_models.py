@@ -2,28 +2,20 @@ import numpy as np
 import pandas as pd
 import torch
 import matplotlib as plt
-from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, roc_auc_score, precision_score, recall_score
+from sklearn.metrics import f1_score, accuracy_score, confusion_matrix, precision_score, recall_score
 
 
-def evaluate_model(model_name, y_true, y_pred, get_ROC_plot=False):
+def evaluate_model(y_true, y_pred):
     f1 = f1_score(y_true, y_pred, labels = range(0,94), average='weighted')
     acc = accuracy_score(y_true, y_pred)
     cm = confusion_matrix(y_true, y_pred)
     prec = precision_score(y_true, y_pred, labels = range(0,94), average = 'weighted')
     recall = recall_score(y_true, y_pred, labels = range(0,94), average = 'weighted')
-    return f1, acc, cm, prec, recall
-
-def plotROCcurve(fpr, tpr, auc):
-    plt.plot(fpr, tpr, label=f'AUC = {auc:.2f}')
-    plt.plot([0, 1], [0, 1], 'k--')  # Diagonal line representing random classifier
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('ROC Curve')
-    plt.legend()
-    plt.show()
+    return (f1, acc, cm, prec, recall)
 
 
-def test_model(model, data_loader, device, criterion):
+
+def test_model_nn(model, data_loader, device, criterion):
     model.eval()  # Set the model to evaluation mode
     test_loss = 0.0
     correct = 0
@@ -53,11 +45,8 @@ def test_model(model, data_loader, device, criterion):
             all_labels.extend(labels.cpu().numpy())
             all_preds.extend(predicted.cpu().numpy())
 
-            # Calculate average loss and accuracy
-    avg_loss = test_loss / len(data_loader)
-    accuracy = 100 * correct / total
 
-
-    f1, acc, cm = evaluate_model(str(type(model)), all_labels, all_preds, get_ROC_plot=True)
-    return avg_loss, accuracy, f1, cm
+    f1, acc, cm, prec, recall = evaluate_model(all_labels, all_preds)
+    print( evaluate_model(all_labels, all_preds))
+    return (f1,acc,prec,recall)
 
