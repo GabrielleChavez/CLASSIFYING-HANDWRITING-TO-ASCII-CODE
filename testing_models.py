@@ -47,6 +47,5 @@ def test_model_nn(model, data_loader, device, criterion):
 
 
     f1, acc, cm, prec, recall = evaluate_model(all_labels, all_preds)
-    print( evaluate_model(all_labels, all_preds))
     return (f1,acc,prec,recall)
 
