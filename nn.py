@@ -305,7 +305,7 @@ class Encoder(nn.Module):
         """
 
         seq_len = x.size(0)
-        x = x + self.encoded_values[:seq_len]
+        x = x + self.pe[:seq_len]
         return self.dropout(x)
     
 
@@ -314,7 +314,7 @@ class CNNTransformer(nn.Module):
     Transformer model that uses a CNN to extract features
     """
 
-    def __init__(self, n_classes, d_model = 64, n_heads = 4, num_layers = 3, dropout = .1):
+    def __init__(self, n_classes, d_model = 64, n_heads = 8, num_layers = 3, dropout = .1):
         """
         Initializes the Transformer model
 
