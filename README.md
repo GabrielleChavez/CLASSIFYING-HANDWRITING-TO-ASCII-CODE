@@ -5,8 +5,10 @@ Project Summary:
 Our goal is to convert handwritten samples into ascii. We want to compare the efficieny of different machine learning and deep learning models including:
 * Random Forest
 * XGBoost
+* K-Nearest Neighbors
 * FeedFoward NN
-* CNN, CNN w/ LSTM, and CNN + Transformer
+* Convolutional NM
+* Transformer w/CNN Features
 
 
 Dataset:
