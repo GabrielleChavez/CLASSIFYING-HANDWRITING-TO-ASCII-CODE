@@ -163,13 +163,13 @@ class CNN(nn.Module):
             torch.Tensor: Logits for each class
         """
         # Convolution 1
-        x = self.pool(F.relu(self.conv1(x)))  # Shape: [B, 4, 14, 14]
+        x = self.pool(F.relu(self.conv1(x))) 
         
         # Convolution 2
-        x = self.pool(F.relu(self.conv2(x)))  # Shape: [B, 8, 7, 7]
+        x = self.pool(F.relu(self.conv2(x)))  
         
         # Flatten to batch of vectors
-        x = x.view(x.size(0), -1)  # Shape: [B, 8*7*7]
+        x = x.view(x.size(0), -1) 
         
         x = F.relu(self.fc1(x))  # First FC layer
         x = self.fc2(x)          # Output layer
@@ -215,21 +215,19 @@ class CNN_LSTM(nn.Module):
         """
 
         # Convolution 1
-        x = self.pool(F.relu(self.conv1(x)))  # Shape: [B, 4, 14, 14]
+        x = self.pool(F.relu(self.conv1(x)))  
 
         # Convolution 2
-        x = self.pool(F.relu(self.conv2(x)))  # Shape: [B, 8, 7, 7]
+        x = self.pool(F.relu(self.conv2(x)))  
 
         # Flatten the dimensions
-        x = x.permute(0, 2, 3, 1).contiguous()  # Shape: [B, 7, 7, 8]
-        x = x.view(x.size(0), x.size(1), -1)  # Shape: [B, 7, 8*7]
+        x = x.permute(0, 2, 3, 1).contiguous()  
+        x = x.view(x.size(0), x.size(1), -1)  
 
         # LSTM Pass
-        x, _ = self.lstm(x)  # Shape: [B, 7, lstm_hidden_dim]
+        x, _ = self.lstm(x)  
 
-        # Get the last hidden state
-        x = x[:, -1, :]  # Shape: [B, lstm_hidden_dim]
-
+        x = x[:, -1, :] 
         x = F.relu(self.fc1(x)) # Activation function + penultimate linear layer
         x = self.fc2(x)          # Output layer
         return x
@@ -263,10 +261,10 @@ class CNNFeatureExtractor(nn.Module):
             torch.Tensor: Extracted features
         """
         # Convolution 1
-        x = self.pool(F.relu(self.conv1(x)))  # Shape: [B, 4, 14, 14]
+        x = self.pool(F.relu(self.conv1(x)))  
         
         # Convolution 2
-        x = self.pool(F.relu(self.conv2(x)))  # Shape: [B, 8, 7, 7]
+        x = self.pool(F.relu(self.conv2(x)))  
         return x
 
 class Encoder(nn.Module):

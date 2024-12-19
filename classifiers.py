@@ -150,17 +150,14 @@ def RandomForest_plots(depth, f1_list_estimators, acc_list_estimators, prec_list
    axes[1, 1].plot(depth, recall_list_estimators)
    axes[1, 1].set_title("Recall Score Progression- Random Forest")
 
-   # Adjust layout
    plt.tight_layout()
 
-   # Show the figure
    plt.show()
 
 def KNN_Plots(depth, f1_list_neighbors, acc_list_neighbors, prec_list_neighbors, recall_list_neighbors):
    #KNN Plots
    fig, axes = plt.subplots(2, 2, figsize=(15, 4))  # 1 row, 5 columns
 
-   # Plot data on each subplot
    axes[0, 0].plot(depth, f1_list_neighbors)
    axes[0, 0].set_title("F1 Score Progression- KNN")
 
@@ -173,7 +170,6 @@ def KNN_Plots(depth, f1_list_neighbors, acc_list_neighbors, prec_list_neighbors,
    axes[1, 1].plot(depth, recall_list_neighbors)
    axes[1, 1].set_title("Recall Score Progression- KNN")
 
-   # Adjust layout
    plt.tight_layout()
 
    plt.show()
@@ -182,7 +178,6 @@ def SVM_plot(kernels, f1_list_kernel, acc_list_kernel, prec_list_kernel, recall_
    #SVM Plot
    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
 
-   # Plot bar graphs
    axes[0, 0].bar(kernels, f1_list_kernel, color='skyblue')
    axes[0, 0].set_title("F1 Scores by Kernel")
 
@@ -196,8 +191,6 @@ def SVM_plot(kernels, f1_list_kernel, acc_list_kernel, prec_list_kernel, recall_
    axes[1, 1].set_title("Recall by Kernel")
 
 
-   # Adjust layout to avoid overlap
    plt.tight_layout()
 
-   # Show the figure
    plt.show()
