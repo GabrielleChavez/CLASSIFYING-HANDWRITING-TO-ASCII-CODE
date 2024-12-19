@@ -15,3 +15,9 @@ Dataset:
 -----------
 We are using the **AlphaNum** dataset that consist of handwritten letters that are 28x28 pixel images in grayscale. 
 The dataset that can be found at: https://www.kaggle.com/datasets/lopalp/alphanum/data
+
+Logistics:
+------------------
+The neural network models can be found under nn.py. The other machine learning models can be found under classifiers.py. The preprocessing functions can be found under preprocess.py. 
+
+For the graders: We have provided a Jupyter Notebook called run_me.py where we step-by-step explain what we did and provide the code for you to run. You will be able to reproduce the results just by following this code. The other files are there in case you want to have a more detailed look.
