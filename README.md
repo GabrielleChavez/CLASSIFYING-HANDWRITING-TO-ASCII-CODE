@@ -21,3 +21,7 @@ Logistics:
 The neural network models can be found under nn.py. The other machine learning models can be found under classifiers.py. The preprocessing functions can be found under preprocess.py. 
 
 For the graders: We have provided a Jupyter Notebook called run_me.py where we step-by-step explain what we did and provide the code for you to run. You will be able to reproduce the results just by following this code. The other files are there in case you want to have a more detailed look.
+
+The write-up can be found in report.pdf and the slides can be found in presentation.pptx.
+
+The dataset is split into folders train, test and validation.
